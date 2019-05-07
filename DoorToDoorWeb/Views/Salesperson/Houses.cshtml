@@ -1,0 +1,43 @@
+﻿@section Title {Houses - Salesperson}
+@model SalespersonHousesListViewModel
+@using DoorToDoorLibrary.DatabaseObjects
+
+    <div class="main-content">
+        <div class="container">
+            <h2>My Houses:</h2>
+            <span>
+                @Html.ValidationMessage("not-your-house")
+            </span>
+            <div class="container">
+                <ul id="salesperson-house-list">
+                    <li class="house-list-item">
+                        <div class="house-list-street">Street</div>
+                        <div class="house-list-city">City</div>
+                        <div class="house-list-district">District</div>
+                        <div class="house-list-country">Country</div>
+                        <div class="house-list-status">Status</div>
+                    </li>
+                    @{
+                        foreach (HouseItem house in Model.Houses)
+                        {
+                            <li class="house-list-item">
+                                <div class="house-list-street">@(house.Street)</div>
+                                <div class="house-list-city">@(house.City)</div>
+                                <div class="house-list-district">@(house.District)</div>
+                                <div class="house-list-country">@(house.Country)</div>
+                                <div class="house-list-status">@(house.Status)</div>
+                                <div class="house-list-details">
+                                    <form asp-controller="Salesperson" asp-action="HouseDetails" method="get" id="get-house-details-@(house.Id)" class="action-icon-form">
+                                        <input type="hidden" value="@(house.Id)" name="houseID" />
+                                        <button title="Details">
+                                            <i class="fas fa-list-ul"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>

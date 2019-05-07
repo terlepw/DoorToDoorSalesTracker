@@ -1,0 +1,862 @@
+﻿/*Sets the page background to the chosen URL*/
+/*body {
+    background-image: url("https://i0.wp.com/www.itsdevelopers.in/wp-content/uploads/2017/11/web-designer-kottayam-background.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+}*/
+
+body {
+    background: repeating-linear-gradient(white,#6695C1, white, #6695C1);
+    background-repeat:no-repeat;
+    color: blue;
+    position: relative;
+    min-height: 100vh;
+}
+
+main {
+    padding-bottom: 2.5rem;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;
+}
+
+footer > p {
+    text-align: center;
+}
+
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+h2 {
+    text-align: center;
+    text-decoration: underline;
+}
+
+.main-content {
+    margin-top: 60px;
+    margin-left: 200px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 15px;
+}
+
+
+.field-validation-error {
+    color: red;
+    font-weight: bold;
+    display: block;
+    text-align: end;
+}
+
+.reset-success {
+    color: green;
+    font-weight: bold;
+}
+
+#admin-manager-list, #manger-salespeople-list,
+#manager-house-list, #salesperson-house-list,
+.manager-dashboard-list,
+#report-list {
+    padding: 0;
+    list-style: none;
+}
+
+    #admin-manager-list > :first-child,
+    #manager-salespeople-list > :first-child,
+    #manager-house-list > :first-child,
+    #transactions-list > :first-child,
+    .manager-dashboard-list > :first-child,
+    #salesperson-house-list > :first-child,
+    #report-list > :first-child {
+        font-weight: bold;
+        border-bottom: 3px solid black;
+        align-items: flex-end;
+    }
+
+    #admin-manager-list > :nth-child(even),
+    #manager-salespeople-list > :nth-child(even),
+    #manager-house-list > :nth-child(even),
+    #salesperson-house-list > :nth-child(even),
+    #transactions-list > :nth-child(even),
+    .manager-dashboard-list > :nth-child(even),
+    #report-list > :nth-child(even) {
+        background-color: #AACAD8;
+    }
+
+#manager-product-list {
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-gap: 10px;
+    list-style: none;
+}
+
+.product-list-item {
+    padding: 5px;
+    text-transform: capitalize;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    justify-content: space-between;
+    border-radius: 15px;
+}
+
+product-list-item > div {
+    padding: 5px;
+}
+
+.manager-list-item,
+.salespeople-list-item {
+    padding: 5px;
+    display: grid;
+    grid-template-columns: 2fr 2fr 3fr 1fr;
+    grid-template-areas: "first last email reset .";
+    grid-gap: 5px;
+}
+
+.manager-list-item, .salespeople-list-item,
+.house-list-item, #house-details {
+    align-items: center;
+    text-transform: capitalize;
+}
+
+.manager-list-first-name,
+.salespeople-list-first-name {
+    grid-area: first;
+}
+
+.manager-list-last-name,
+.salespeople-list-last-name {
+    grid-area: last;
+}
+
+.manager-list-email,
+.salespeople-list-email {
+    grid-area: email;
+    text-transform: none;
+}
+
+.manager-list-reset,
+.salespeople-list-reset {
+    grid-area: reset;
+}
+
+.action-icon-form {
+    overflow: inherit;
+    padding: 0;
+    background: none;
+    border: none;
+    margin: 0;
+    max-width: none;
+}
+
+    .action-icon-form button {
+        float: none;
+        width: auto;
+        background: none;
+        padding: 0;
+    }
+
+.house-list-item {
+    padding: 5px;
+    display: grid;
+    grid-template-columns: 3fr 2fr 2fr 2fr 2fr 2fr 1fr;
+    grid-template-areas: "street city district country sales status details";
+    grid-gap: 5px;
+}
+
+#salesperson-house-list .house-list-item {
+    padding: 5px;
+    display: grid;
+    grid-template-columns: 3fr 2fr 2fr 2fr 2fr 1fr;
+    grid-template-areas: "street city district country status details";
+    grid-gap: 5px;
+}
+
+.house-list-street {
+    grid-area: street;
+}
+
+.house-list-city {
+    grid-area: city;
+}
+
+.house-list-district {
+    grid-area: district;
+}
+
+.house-list-country {
+    grid-area: country;
+}
+
+.house-list-salesperson {
+    grid-area: sales;
+}
+
+.house-list-status {
+    grid-area: status;
+}
+
+.house-list-details {
+    grid-area: details;
+}
+
+#house-notes-list {
+    grid-area: notes;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.house-note {
+    display: grid;
+    grid-template-columns: 10% auto 10%;
+    grid-template-areas:
+        ". date ."
+        "info info info";
+    margin-bottom: 15px;
+    padding: 0;
+    background-color: #AACAD8;
+}
+
+.house-note-user-date {
+    grid-area: date;
+    padding: 10px 0;
+}
+
+.house-note-info {
+    grid-area: info;
+    padding: 10px 20px;
+    background-color: white;
+}
+
+.report-item {
+    padding: 5px;
+    display: grid;
+    grid-template-columns: 2fr 4fr 2fr 2fr 3fr 2fr;
+    grid-template-areas: "id address date amount product salesperson";
+}
+
+    .report-item div {
+        padding-right: 5px;
+        padding-left: 5px;
+    }
+
+.report-item-id {
+    grid-area: id;
+}
+
+.report-item-address {
+    grid-area: address;
+    text-transform: capitalize;
+}
+
+.report-item.date {
+    grid-area: date;
+}
+
+.report-item.amount {
+    grid-area: amount;
+}
+
+.report-item-product {
+    grid-area: product;
+    text-transform: capitalize;
+}
+
+.report-item-salesperson {
+    grid-area: salesperson;
+}
+
+/*Affects the header section, fits logo to header, applies a translucent background*/
+.header > h1 {
+    height: 35%;
+    background-color: rgba(66, 226, 244, .5);
+    padding: 0;
+}
+
+#report-filters {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+#report-filters > div {
+    max-width: 200px;
+    margin: 10px;
+}
+
+#report-filter-button-align {
+    text-align: center;
+}
+
+
+/*current navbar paste here*/
+
+
+
+.no-link-modify {
+    text-decoration: none;
+    color: inherit;
+}
+
+#house-details {
+    display: flex;
+    padding: 5px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#house-details > div {
+    border-bottom: 1px solid black;
+    width: 100%;
+}
+
+#house-details > :last-child {
+    border-bottom: none;
+}
+
+#house-detail-address {
+    display: grid;
+    padding: 5px;
+    grid-template-columns: 10% 1fr 1fr 10%;
+    grid-template-areas: ". head address .";
+    grid-column-gap: 5px;
+    align-items: center;
+}
+
+#house-detail-address h5 {
+    grid-area: head;
+}
+
+#house-detail-address div {
+    grid-area: address;
+}
+
+#house-detail-salesperson {
+    display: grid;
+    padding: 5px;
+    grid-template-columns: 10% 1fr 1fr 10%;
+    grid-template-areas: ". head salesperson .";
+    grid-column-gap: 5px;
+    align-items: center;
+}
+
+#house-detail-salesperson h5 {
+    grid-area: head;
+}
+
+#house-detail-salesperson div {
+    grid-area: salesperson;
+}
+
+#house-detail-status {
+    display: grid;
+    padding: 5px;
+    grid-template-columns: 10% 1fr 1fr 10%;
+    grid-template-areas: ". head status .";
+    grid-column-gap: 5px;
+    align-items: center;
+}
+
+    #house-detail-status h5 {
+        grid-area: head;
+    }
+
+    #house-detail-status > div {
+        grid-area: status;
+    }
+
+#house-detail-residents {
+    display: grid;
+    padding: 5px;
+    grid-template-columns: 10% 1fr 1fr 10%;
+    grid-template-areas:
+        ". head residents ."
+        ". form residents .";
+    grid-gap: 5px;
+    align-items: center;
+}
+
+    #house-detail-residents h5 {
+        grid-area: head;
+    }
+
+    #house-detail-residents ul {
+        padding: 0;
+        grid-area: residents;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        grid-gap: 5px;
+        list-style: none;
+        align-self: flex-start;
+    }
+
+        #house-detail-residents ul li {
+            padding: 5px;
+        }
+
+    #house-detail-residents > div {
+        grid-area: form;
+    }
+
+#house-detail-notes {
+    display: grid;
+    padding: 5px;
+    grid-template-columns: 5% 5% 1fr 1fr 5% 5%;
+    grid-template-areas:
+        ". . head form . ."
+        ". notes notes notes notes .";
+    grid-gap: 5px;
+    align-items: center;
+}
+
+#house-detail-notes > div {
+    grid-area: head;
+    align-self: flex-start;
+}
+
+#house-detail-notes form {
+    grid-area: form;
+    margin: 0;
+}
+
+ * {
+    box-sizing: border-box;
+}
+
+form {
+    padding: 1em;
+    background: #f9f9f9;
+    border: 1px solid #c1c1c1;
+    margin-top: 2rem;
+    max-width: 600px;
+    border-radius: 25px;
+    margin-left:auto;
+    margin-right:auto;
+    margin-bottom: 5%;
+}
+
+
+    form input, form textarea {
+        margin-bottom: 1rem;
+        background: #fff;
+        border: 1px solid #9c9c9c;
+        width: 100%;
+        padding: 0.7em;
+        margin-left:auto;
+        text-align:center;
+       
+    }
+
+#user-login-form .container{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#manager-add-note .form-group, #manager-create-house .form-group, #manager-create-product .form-group, #manager-create-salesperson .form-group{
+    text-align:center;
+}
+
+.form-group{
+    text-align:center;
+}
+
+    #manager-add-note, #manager-create-house, #manager-create-product, #manager-create-salesperson{
+        width:60%;
+    }
+
+#user-login-form, #password-reset-redirect {
+    width: 40%;
+}
+#password-reset-redirect button{
+    width:100%;
+}
+
+        form input:focus{
+            outline: 3px solid gold;
+        }
+
+    form button {
+        background: lightgrey;
+        padding: 0.7em;
+        border: 0;
+    
+
+    }
+
+        form button:hover {
+            background: gold;
+        }
+
+    form label {
+        text-align: right;
+        display: block;
+        padding: 0.5em 1.5em 0.5em 0;
+    }
+
+    form select {
+        width: 100%;
+        padding: 0.7em;
+        margin-bottom: 0.5rem;
+    }
+
+.container {
+   
+    clear: both;
+}
+
+ .container input {
+    width: 100%;
+    clear: both;
+}
+
+.show-hide-button {
+    color: darkgoldenrod;
+    font-weight: bolder;
+    margin-bottom: 10px;
+}
+
+.registerformspace {
+    padding-bottom: 10%;
+}
+
+/*.currentusernav, .logoutnav{
+    float:right;
+}*/
+
+@media (min-width: 400px) {
+
+
+
+
+    /*Testing a new navigation bar, this is the start*/
+    /*.currentusernav, .logoutnav {
+        margin-left: auto;
+    }
+
+    .navbar-global {
+        background-color: indigo;
+    }
+
+        .navbar-global .navbar-brand {
+            color: white;
+        }
+
+        .navbar-global .navbar-user > li > a {
+            color: white;
+        }
+
+    .navbar-primary {
+        background-color: lightgrey;
+        bottom: 0px;
+        left: 0px;
+        position: absolute;
+        top: 51px;
+        width: 200px;
+        z-index: 8;
+        overflow: hidden;
+    }
+
+    #navbar-header{
+        color:black;
+       font-size:large;
+    }
+    .navbar-primary-menu,
+    .navbar-primary-menu li {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+        .navbar-primary-menu li a {
+            display: block;
+            padding: 10px 18px;
+            text-align: left;
+            border-bottom: solid 1px #444;
+            color: black;
+        }
+
+            .navbar-primary-menu li a:hover {
+                background-color: #000;
+                text-decoration: none;
+                color: white;
+            }
+
+            .navbar-primary-menu li a .glyphicon {
+                margin-right: 6px;
+            }
+
+            .navbar-primary-menu li a:hover .glyphicon {
+                color: orchid;
+            }
+
+            .logoutnav{
+                padding-left:5%;
+            }
+
+    .main-content {
+        margin-top: 60px;
+        margin-left: 200px;
+        padding: 20px;
+    }
+
+    .collapsed + .main-content {
+        margin-left: 60px;
+    }*/
+    /*Testing a new navigation bar, this is the end*/
+
+
+  
+}
+
+#house-select, #product-select {
+    text-transform: capitalize;
+}
+
+.transaction-list-item {
+    padding: 5px;
+    display: grid;
+    grid-template-columns: 3fr 2fr 2fr 2fr;
+    grid-template-areas: "date amount address product";
+    grid-gap: 5px;
+}
+
+.transaction-list-date {
+    grid-area: date;
+    text-transform: capitalize;
+}
+
+.transaction-list-amount {
+    grid-area: amount;
+}
+
+.transaction-list-address {
+    grid-area: address;
+    text-transform: capitalize;
+}
+
+.transaction-list-product {
+    grid-area: product;
+    text-transform: capitalize;
+}
+
+.dashboard-salesman-list {
+    padding: 5px;
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr;
+    grid-template-areas: "first-name last-name rank-item";
+    grid-gap: 5px;
+}
+
+.dashboard-first-name {
+    grid-area: first-name;
+}
+
+.dashboard-last-name {
+    grid-area: last-name;
+}
+
+.dashboard-rank-item {
+    grid-area: rank-item;
+    text-align: right;
+}
+
+.dashboard-house-list {
+    padding: 5px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas: "address rank-item";
+    grid-gap: 5px;
+}
+
+.dashboard-address {
+    grid-area: address;
+    text-transform: capitalize;
+}
+
+#profile-info {
+    display: grid;
+    grid-template-columns: auto 35% 35% auto;
+    grid-template-areas: ". name email .";
+    grid-gap: 10px;
+    margin-bottom: 20px;
+}
+
+#my-profile-name {
+    grid-area: name;
+}
+
+#my-profile-email {
+    grid-area: email;
+}
+
+
+
+
+.nav-link{
+    color:white !important;
+}
+
+
+.navbar-global {
+    background-color: gray;
+}
+
+    .navbar-global .navbar-brand {
+        color: white;
+    }
+
+    .navbar-global .navbar-user > li > a {
+        color: white;
+    }
+
+.navbar-primary {
+    background-color: #333;
+    bottom: 0px;
+    left: 0px;
+    position: absolute;
+    top: 51px;
+    width: 200px;
+    z-index: 8;
+    overflow: hidden;
+
+}
+
+#navbartop{
+    z-index:9;
+}
+
+.navbar-header{
+    font-weight:bold;
+    color:white;
+    font-size:larger;
+}
+
+#currentusernav{
+    color:white;
+}
+
+
+.navbar-primary-menu,
+.navbar-primary-menu li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width:100%;
+}
+
+    .navbar-primary-menu li a {
+        display: block;
+        padding: 10px 18px;
+        text-align: left;
+        border-bottom: solid 1px #444;
+        color: #ccc;
+    }
+
+        .navbar-primary-menu li a:hover {
+            background-color: #000;
+            text-decoration: none;
+            color: white;
+        }
+
+        .navbar-primary-menu li a .glyphicon {
+            margin-right: 6px;
+        }
+
+        .navbar-primary-menu li a:hover .glyphicon {
+            color: orchid;
+        }
+
+.main-content {
+    margin-top: 60px;
+    margin-left: 200px;
+    padding: 20px;
+}
+
+#dashboard-totals {
+    padding: 5px;
+    display: grid;
+    grid-template-columns: 1fr 5fr 1fr 5fr 1fr;
+    grid-template-areas: ". sales . revenue .";
+    grid-gap: 5px;
+}
+
+#total-sales {
+    grid-area: sales;
+}
+#total-revenue {
+    grid-area: revenue;
+}
+
+.dashboard-lists {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "salesman house";
+    grid-column-gap: 10px;
+}
+
+.salesman-lists {
+    grid-area: salesman;
+}
+
+.houses-lists {
+    grid-area: house;
+}
+
+#salesperson-dashboard-lists {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "count revenue";
+    grid-column-gap: 10px;
+}
+
+#salesperson-top-count {
+    grid-area: count;
+}
+
+#salesperson-top-revenue {
+    grid-area: revenue;
+}
+
+#team-window {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+#team-lead, #team-grunts {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+}
+
+.team-member {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    max-width: 200px;
+    text-align: center;
+    margin: 20px 0;
+}
+
+    .team-member img {
+        object-fit: contain;
+        max-width: 200px;
+        border-radius: 50%;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }

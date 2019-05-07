@@ -1,0 +1,87 @@
+﻿@section Title {Home - Admin}
+@section Scripts {
+    @{
+        bool isFormOpen = TempData["holdForm"] != null ? (bool)TempData["holdForm"] : false;
+
+        <script>const holdForm = @(Json.Serialize(isFormOpen));</script>
+        <script src="~/js/adminRegisterManager.js"></script>
+        <script src="~/js/site.js"></script>
+    }
+}
+@model AdminManagerListViewModel
+@using DoorToDoorLibrary.DatabaseObjects
+
+    <div class="main-content">
+        <div class="container">
+            <h2>Registered Managers</h2>
+            <div id="show-hide-form" class="show-hide-button">Show Create Manager Form</div>
+            <form asp-controller="Administrator" asp-action="RegisterManager" method="post" id="admin-create-manager">
+                <div class="form-group">
+            
+                    <input asp-for="Register.FirstName" type="text"  placeholder="First Name"/>
+                    <span asp-validation-for="Register.FirstName"></span>
+                </div>
+                <div class="form-group">
+
+                    <input asp-for="Register.LastName" type="text"  placeholder="Last Name" />
+                    <span asp-validation-for="Register.LastName"></span>
+                </div>
+                <div class="form-group">
+    
+                    <input asp-for="Register.EmailAddress" type="email"  placeholder="Email Address"/>
+                    <span asp-validation-for="Register.EmailAddress"></span>
+                </div>
+                <div class="form-group">
+                    <button>Create Manager</button>
+                    <span>
+                        @Html.ValidationMessage("invalid", new { @class = "field-validation-error" })
+                    </span>
+                </div>
+            </form>
+            <div class="container">
+                <span>
+                    @Html.ValidationMessage("resetFailed", new { @class = "field-validation-error" })
+                </span>
+                @if ((TempData["resetSuccess"] != null) && ((bool)TempData["resetSuccess"]))
+                {
+                    <div class="reset-success">Reset Password flag successfully set!</div>
+                    <div class="reset-success">New Password is @(TempData["tempPassword"])</div>
+                }
+                @if ((TempData["registerSuccess"] != null) && ((bool)TempData["registerSuccess"]))
+                {
+                    <div class="reset-success">Manager Successfully Created!</div>
+                    <div class="reset-success">Password Is @(TempData["tempPassword"])</div>
+                }
+            </div>
+            <div class="container">
+                <ul id="admin-manager-list">
+                    <li class="manager-list-item">
+                        <div class="manager-list-first-name">First Name</div>
+                        <div class="manager-list-last-name">Last Name</div>
+                        <div class="manager-list-email">Email Addresss</div>
+                    </li>
+                    @{
+                        foreach (UserItem user in Model.Managers)
+                        {
+                            <li class="manager-list-item">
+                                <div class="manager-list-first-name">@(user.FirstName)</div>
+                                <div class="manager-list-last-name">@(user.LastName)</div>
+                                <div class="manager-list-email">@(user.EmailAddress)</div>
+                                <div class="manager-list-reset">
+                                    <form asp-controller="Administrator" asp-action="ResetPassword" method="post" id="admin-reset-password-form@(user.Id)" class="action-icon-form">
+                                        <input type="hidden" value="@(user.Id)" name="userID" />
+                                        <button title="Reset Password">
+                                            <i class="fas fa-unlock"></i>
+                                        </button>
+                                        <span>
+                                            @Html.ValidationMessage($"resetFailed{user.Id}", new { @class = "field-validation-error" })
+                                        </span>
+                                    </form>
+                                </div>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>

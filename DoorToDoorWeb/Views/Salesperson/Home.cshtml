@@ -1,0 +1,54 @@
+﻿@section Title {Home - Salesperson}
+
+@model SalespersonDashboardViewModel
+@using DoorToDoorLibrary.DatabaseObjects
+
+    <div class="main-content">
+        <div class="container">
+            <h2>Salesman Dashboard</h2>
+            <div class="container">
+                <div id="dashboard-totals">
+                    <h4 id="total-sales">My Number of Sales: @Model.MySales</h4>
+                    <h4 id="total-revenue">My Total Revenue: @Model.MyRevenue.ToString("C")</h4>
+                </div>
+                <div id="salesperson-dashboard-lists">
+                    <div id="salesperson-top-count">
+                        <div class="container">
+                            <h5>My Top Houses by Quantity</h5>
+                            <ul class="manager-dashboard-list">
+                                <li class="dashboard-house-list">
+                                    <div class="dashboard-address">Address</div>
+                                    <div class="dashboard-rank-item">Sales Count</div>
+                                </li>
+                                @foreach (SalespersonBestCustomerCountItem item in Model.BestCustomersByCount)
+                                {
+                                    <li class="dashboard-house-list">
+                                        <div class="dashboard-address">@item.Address</div>
+                                        <div class="dashboard-rank-item">@item.TransactionsCount</div>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="salesperson-top-revenue">
+                        <div class="container">
+                            <h5>My Top Houses by Revenue</h5>
+                            <ul class="manager-dashboard-list">
+                                <li class="dashboard-house-list">
+                                    <div class="dashboard-address">Address</div>
+                                    <div class="dashboard-rank-item">Total Revenue</div>
+                                </li>
+                                @foreach (SalespersonBestCustomerRevenueItem item in Model.BestCustomersByRevenue)
+                                {
+                                    <li class="dashboard-house-list">
+                                        <div class="dashboard-address">@item.Address</div>
+                                        <div class="dashboard-rank-item">@item.TotalRevenue.ToString("C")</div>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

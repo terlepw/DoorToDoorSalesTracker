@@ -1,0 +1,96 @@
+﻿@model ProfileViewModel
+@section Title {Profile - @(Model.Role)}
+@section Scripts {
+    @{
+        bool isProfileFormOpen = TempData["holdProfileForm"] != null ? (bool)TempData["holdProfileForm"] : false;
+        bool isPasswordFormOpen = TempData["holdPasswordForm"] != null ? (bool)TempData["holdPasswordForm"] : false;
+
+        <script>
+            const holdProfileForm = @(Json.Serialize(isProfileFormOpen));
+            const holdPasswordForm = @(Json.Serialize(isPasswordFormOpen));
+        </script>
+        <script src="~/js/myProfileForms.js"></script>
+    }
+}
+
+    <div class="main-content">
+        <div class="container">
+            <h2>My Profile:</h2>
+            <div class="container">
+                <div id="my-profile">
+                    <div id="profile-info" class="container">
+                        <div id="my-profile-name">
+                            <h6>My Name:</h6>
+                            <div>@(Model.FirstName) @(Model.LastName)</div>
+                        </div>
+                        <div id="my-profile-email">
+                            <h6>My Email Address:</h6>
+                            <div>@(Model.EmailAddress)</div>
+                        </div>
+                    </div>
+                    <div id="my-profile-update">
+                        <div class="container">
+                            @if ((TempData["updateProfileSuccess"] != null) && ((bool)TempData["updateProfileSuccess"]))
+                            {
+                                <div class="reset-success">Profile Successfully Updated!</div>
+                            }
+                        </div>
+                        <div id="show-hide-profile-form" class="show-hide-button">Show Update Profile Form</div>
+                        <form asp-controller="Home" asp-action="UpdateProfile" method="post" id="update-profile-form">
+                            <div class="form-group">
+                                <input asp-for="UpdateProfile.FirstName" type="text" value="@(Model.FirstName)" placeholder="Enter New First Name" />
+                                <span asp-validation-for="UpdateProfile.FirstName"></span>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="UpdateProfile.LastName" type="text" value="@(Model.LastName)" placeholder="Enter New Last Name" />
+                                <span asp-validation-for="UpdateProfile.LastName"></span>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="UpdateProfile.EmailAddress" type="email" value="@(Model.EmailAddress)" placeholder="Enter New Email Address" />
+                                <span asp-validation-for="UpdateProfile.EmailAddress"></span>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="UpdateProfile.Password" type="password" placeholder="Enter Password" />
+                                <span asp-validation-for="UpdateProfile.Password"></span>
+                            </div>
+                            <div class="form-group">
+                                <button>Update Profile</button>
+                                <span>
+                                    @Html.ValidationMessage("invalid-profile", new { @class = "field-validation-error" })
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="my-profile-password-reset">
+                        <div class="container">
+                            @if ((TempData["resetPasswordSuccess"] != null) && ((bool)TempData["resetPasswordSuccess"]))
+                            {
+                                <div class="reset-success">Password Successfully Reset!</div>
+                            }
+                        </div>
+                        <div id="show-hide-password-form" class="show-hide-button">Show Change Password Form</div>
+                        <form asp-controller="Home" asp-action="SelfResetPassword" method="post" id="reset-password-form">
+                            <div class="form-group">
+                                <input asp-for="ResetPassword.CurrentPassword" type="password" placeholder="Enter Current Password" />
+                                <span asp-validation-for="UpdateProfile.FirstName"></span>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="ResetPassword.NewPassword" type="password" placeholder="Enter New Password" />
+                                <span asp-validation-for="ResetPassword.NewPassword"></span>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="ResetPassword.ConfirmNewPassword" type="password" placeholder="Confirm New Password" />
+                                <span asp-validation-for="ResetPassword.ConfirmNewPassword"></span>
+                            </div>
+                            <div class="form-group">
+                                <button>Reset Password</button>
+                                <span>
+                                    @Html.ValidationMessage("invalid-password", new { @class = "field-validation-error" })
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,64 @@
+﻿@section Title {Transactions - Salesperson}
+
+
+@section Scripts {
+    @{
+        bool isFormOpen = TempData["holdForm"] != null ? (bool)TempData["holdForm"] : false;
+
+        <script>const holdForm = @(Json.Serialize(isFormOpen));</script>
+        <script src="~/js/managerCreateProduct.js"></script>
+        <script src="~/js/site.js"></script>
+    }
+}
+
+@model TransactionsViewModel
+@using DoorToDoorLibrary.DatabaseObjects
+
+    <div class="main-content">
+        <div class="container">
+            <h2>My Transactions</h2>
+            <div id="show-hide-form" class="show-hide-button">Add A Transaction</div>
+            <form asp-controller="Salesperson" asp-action="AddTransaction" method="post" id="salesman-add-transaction">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label asp-for="AddTransaction.Amount"></label>
+                        <input asp-for="AddTransaction.Amount" type="text" />
+                        <span asp-validation-for="AddTransaction.Amount"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AddTransaction.HouseID"></label>
+                        <select asp-for="AddTransaction.HouseID" asp-items="Model.HouseList" id="house-select"></select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AddTransaction.ProductID"></label>
+                        <select asp-for="AddTransaction.ProductID" asp-items="Model.ProductList" id="product-select"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button>Finalize Transaction</button>
+                    <span>
+                        @Html.ValidationMessage("invalid", new { @class = "field-validation-error" })
+                    </span>
+                </div>
+            </form>
+            <div class="container">
+                <ul id="transactions-list">
+                    <li class="transaction-list-item">
+                        <div class="transaction-list-date">Date</div>
+                        <div class="transaction-list-amount">Amount</div>
+                        <div class="transaction-list-address">House Address</div>
+                        <div class="transaction-list-product">Product</div>
+                    </li>
+                    @foreach (TransactionItem item in Model.Transactions)
+                    {
+                        <li class="transaction-list-item">
+                            <div class="transaction-list-date">@item.Date</div>
+                            <div class="transaction-list-amount">@item.Amount.ToString("C")</div>
+                            <div class="transaction-list-address">@item.House</div>
+                            <div class="transaction-list-product">@item.Product</div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>

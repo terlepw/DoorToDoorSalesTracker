@@ -1,0 +1,11 @@
+﻿@section Title{Reset Password}
+@model ResetPasswordViewModel
+
+    <div class="main-content">
+        <div class="container">
+            <h2>Successfully Reset Password!</h2>
+            <form asp-controller="Home" asp-action="ResetRedirect" method="post" id="password-reset-redirect">
+                <button>Continue</button>
+            </form>
+        </div>
+    </div>

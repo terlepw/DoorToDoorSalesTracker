@@ -1,0 +1,68 @@
+﻿@using DoorToDoorLibrary.DatabaseObjects
+@section Title {Home - Manager}
+@section Scripts {
+    <script>const reportData = @(Json.Serialize(Model.Report.ToArray()));</script>
+    <script src="~/js/reportFilters.js"></script>
+}
+@model ReportViewModel
+
+    <div class="main-content">
+        <div class="container">
+            <h2>Reports</h2>
+            <div id="report-filters">
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" id="address-filter" />
+                </div>
+                <div class="form-group">
+                    <label>From Date</label>
+                    <input type="date" id="date-filter1" />
+                </div>
+                <div class="form-group">
+                    <label>To Date</label>
+                    <input type="date" id="date-filter2" />
+                </div>
+                <div class="form-group">
+                    <label>From Amount</label>
+                    <input type="number" id="amount-filter1" />
+                </div>
+                <div class="form-group">
+                    <label>To Amount</label>
+                    <input type="number" id="amount-filter2" />
+                </div>
+                <div class="form-group">
+                    <label>Product</label>
+                    <input type="text" id="product-filter" />
+                </div>
+                <div class="form-group">
+                    <label>Salesperson</label>
+                    <input type="text" id="salesperson-filter" />
+                </div>
+            </div>
+            <div id="report-filter-button-align">
+                <button id="report-filter-button">Apply Filters</button>
+                <button id="report-filter-clear">Clear Filters</button>
+            </div>
+            <ul id="report-list">
+                <li id="report-header" class="report-item">
+                    <div class="report-item-id">Transaction ID</div>
+                    <div class="report-item-address">Address</div>
+                    <div class="report-item-date">Date</div>
+                    <div class="report-item-amount">Amount</div>
+                    <div class="report-item-product">Product</div>
+                    <div class="report-item-salesperson">SalespersonName</div>
+                </li>
+                @foreach (ReportItem item in Model.Report)
+                {
+                    <li class="report-item">
+                        <div class="report-item-id">@(item.Id)</div>
+                        <div class="report-item-address">@(item.Address)</div>
+                        <div class="report-item-date">@(item.Date)</div>
+                        <div class="report-item-amount">@(item.Amount.ToString("C"))</div>
+                        <div class="report-item-product">@(item.ProductName)</div>
+                        <div class="report-item-salesperson">@(item.SalespersonName)</div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>

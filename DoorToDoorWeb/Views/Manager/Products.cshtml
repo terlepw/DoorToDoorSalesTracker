@@ -1,0 +1,64 @@
+﻿@section Title {Products - Manager}
+@section Scripts {
+    @{
+        bool isFormOpen = TempData["holdForm"] != null ? (bool)TempData["holdForm"] : false;
+
+        <script>const holdForm = @(Json.Serialize(isFormOpen));</script>
+        <script src="~/js/managerCreateProduct.js"></script>
+        <script src="~/js/site.js"></script>
+    }
+}
+@model ManagerProductsListViewModel
+@using DoorToDoorLibrary.DatabaseObjects
+
+    <div class="main-content">
+        <div class="container">
+            <h2>My Products</h2>
+            <div id="show-hide-form" class="show-hide-button">Show Create Product Form</div>
+            <form asp-controller="Manager" asp-action="CreateProduct" method="post" id="manager-create-product">
+                <div class="form-group">
+
+                    <input asp-for="CreatedProduct.Name" type="text" placeholder="Product Name" />
+                    <span asp-validation-for="CreatedProduct.Name"></span>
+                </div>
+                <div class="form-group">
+                    <button>Create Product</button>
+                    <span>
+                        @Html.ValidationMessage("invalid", new { @class = "field-validation-error" })
+                    </span>
+                </div>
+            </form>
+            <div class="container">
+                <span>
+                    @Html.ValidationMessage("removeFailed", new { @class = "field-validation-error" })
+                </span>
+                @if ((TempData["removeSuccess"] != null) && ((bool)TempData["removeSuccess"]))
+                {
+                    <div class="reset-success">Product successfully removed.</div>
+                }
+            </div>
+            <div class="container">
+                <ul id="manager-product-list">
+                    @{
+                        foreach (ProductItem product in Model.Products)
+                        {
+                            <li class="product-list-item">
+                                <div>@(product.Name)</div>
+                                <div>
+                                    <form asp-controller="Manager" asp-action="RemoveProduct" method="post" id="manager-remove-product-form@(product.Id)" class="action-icon-form">
+                                        <input type="hidden" value="@(product.Id)" name="productID" />
+                                        <button title="Remove Product">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                        <span>
+                                            @Html.ValidationMessage($"removeFailed{product.Id}", new { @class = "field-validation-error" })
+                                        </span>
+                                    </form>
+                                </div>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>

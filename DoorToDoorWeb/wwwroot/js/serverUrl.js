@@ -1,0 +1,1 @@
+﻿const d2dServerUrl = "https://localhost:44343/";

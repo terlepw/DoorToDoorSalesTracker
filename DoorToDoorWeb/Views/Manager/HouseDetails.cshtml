@@ -1,0 +1,100 @@
+﻿@section Title {House Detail - Manager}
+@section Scripts {
+    @{
+        bool isNoteFormOpen = TempData["holdNoteForm"] != null ? (bool)TempData["holdNoteForm"] : false;
+        bool isResidentFormOpen = TempData["holdResidentForm"] != null ? (bool)TempData["holdResidentForm"] : false;
+
+        <script>
+            const holdNoteForm = @(Json.Serialize(isNoteFormOpen));
+            const holdResidentForm = @(Json.Serialize(isResidentFormOpen));
+            const houseID = @(Model.House.Id);
+        </script>
+        <script src="~/js/serverUrl.js"></script>
+        <script src="~/js/houseDetailsForms.js"></script>
+        <script src="~/js/houseSalespersonChange.js"></script>
+    }
+}
+@model HouseDetailsViewModel
+@using DoorToDoorLibrary.DatabaseObjects
+
+    <div class="main-content">
+        <div class="container">
+            <h2>House Details:</h2>
+            <div class="container">
+                <div id="house-details">
+                    <div id="house-detail-address">
+                        <h5>Address:</h5>
+                        <div>@(Model.House.Street), @(Model.House.City), @(Model.House.District), @(Model.House.ZipCode), @(Model.House.Country)</div>
+                    </div>
+                    <div id="house-detail-salesperson">
+                        <h5>Assigned To:</h5>
+                        <div>
+                            <select asp-items="Model.SalespersonOptions" id="assigned-salesperson-select"></select>
+                            <div id="assigned-salesperson-update-response"></div>
+                        </div>
+                    </div>
+                    <div id="house-detail-status">
+                        <h5>Current Status:</h5>
+                        <div>@(Model.House.Status)</div>
+                    </div>
+                    <div id="house-detail-residents">
+                        <h5>Residents:</h5>
+                        <div>
+                            <div id="show-hide-resident-form" class="show-hide-button">Show Add Note Form</div>
+                            <form asp-controller="Manager" asp-action="AddHouseResident" method="post" id="add-resident-form">
+                                <input type="hidden" asp-for="AddResident.HouseID" value="@(Model.House.Id)" />
+                                <div class="form-group">
+                                    <input asp-for="AddResident.FirstName" type="text" placeholder="First Name" />
+                                    <span asp-validation-for="AddResident.FirstName"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input asp-for="AddResident.LastName" type="text" placeholder="Last Name" />
+                                    <span asp-validation-for="AddResident.LastName"></span>
+                                </div>
+                                <div class="form-group">
+                                    <button>Add Resident</button>
+                                    <span>
+                                        @Html.ValidationMessage("invalid-resident", new { @class = "field-validation-error" })
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                        <ul>
+                            @foreach (ResidentItem resident in Model.Residents)
+                            {
+                                <li>@(resident.FirstName) @(resident.LastName)</li>
+                            }
+                        </ul>
+                    </div>
+                    <div id="house-detail-notes">
+                        <div>
+                            <h5>Notes:</h5>
+                            <div id="show-hide-note-form" class="show-hide-button">Show Add Note Form</div>
+                        </div>
+                        <form asp-controller="Manager" asp-action="AddHouseNote" method="post" id="add-note-form">
+                            <input type="hidden" asp-for="AddNote.HouseID" value="@(Model.House.Id)" />
+                            <div class="form-group">
+                                <textarea asp-for="AddNote.Note" placeholder="Type Note Here"></textarea>
+                                <span asp-validation-for="AddNote.Note"></span>
+                            </div>
+                            <div class="form-group">
+                                <button>Add Note</button>
+                                <span>
+                                    @Html.ValidationMessage("invalid-note", new { @class = "field-validation-error" })
+                                </span>
+                            </div>
+                        </form>
+                        <ul id="house-notes-list">
+                            @foreach (NoteItem note in Model.Notes)
+                            {
+                                <li class="house-note">
+                                    <div class="house-note-user-date">@(note.UserName) : @(note.SubmittedDate)</div>
+                                    <div class="house-note-info">@(note.Note)</div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

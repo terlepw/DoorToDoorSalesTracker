@@ -1,0 +1,92 @@
+﻿@section Title {Houses - Manager}
+@section Scripts {
+    @{
+        bool isFormOpen = TempData["holdForm"] != null ? (bool)TempData["holdForm"] : false;
+
+        <script>const holdForm = @(Json.Serialize(isFormOpen));</script>
+        <script src="~/js/managerCreateHouse.js"></script>
+        <script src="~/js/site.js"></script>
+    }
+}
+@model ManagerHousesListViewModel
+@using DoorToDoorLibrary.DatabaseObjects
+
+    <div class="main-content">
+        <div class="container">
+            <h2>My Houses</h2>
+            <div id="show-hide-form" class="show-hide-button">Show Create House Form</div>
+            <form asp-controller="Manager" asp-action="CreateHouse" method="post" id="manager-create-house">
+                <div class="form-group">
+                    <input asp-for="CreatedHouse.Street" type="text" placeholder="Street" />
+                    <span asp-validation-for="CreatedHouse.Street"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="CreatedHouse.City" type="text" placeholder="City" />
+                    <span asp-validation-for="CreatedHouse.City"></span>
+                </div>
+                <div class="form-group">
+
+                    <input asp-for="CreatedHouse.District" type="text" placeholder="District" />
+                    <span asp-validation-for="CreatedHouse.District"></span>
+                </div>
+                <div class="form-group">
+
+                    <input asp-for="CreatedHouse.ZipCode" type="text" placeholder="Zip Code" />
+                    <span asp-validation-for="CreatedHouse.ZipCode"></span>
+                </div>
+                <div class="form-group">
+
+                    <input asp-for="CreatedHouse.Country" type="text" placeholder="Country" />
+                    <span asp-validation-for="CreatedHouse.Country"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CreatedHouse.AssignedSalespersonID"></label>
+                    <select asp-for="CreatedHouse.AssignedSalespersonID" asp-items="Model.PossibleSalespeople"></select>
+
+                    <span asp-validation-for="CreatedHouse.AssignedSalespersonID"></span>
+                </div>
+                <div class="form-group">
+                    <button>Create House</button>
+                    <span>
+                        @Html.ValidationMessage("invalid", new { @class = "field-validation-error" })
+                    </span>
+                </div>
+        </form>
+            <div class="container">
+                <span>
+                    @Html.ValidationMessage("not-your-house")
+                </span>
+                <ul id="manager-house-list">
+                    <li class="house-list-item">
+                        <div class="house-list-street">Street</div>
+                        <div class="house-list-city">City</div>
+                        <div class="house-list-district">District</div>
+                        <div class="house-list-country">Country</div>
+                        <div class="house-list-salesperson">Assigned Salesperson</div>
+                        <div class="house-list-status">Status</div>
+                    </li>
+                    @{
+                        foreach (HouseItem house in Model.Houses)
+                        {
+                            <li class="house-list-item">
+                                <div class="house-list-street">@(house.Street)</div>
+                                <div class="house-list-city">@(house.City)</div>
+                                <div class="house-list-district">@(house.District)</div>
+                                <div class="house-list-country">@(house.Country)</div>
+                                <div class="house-list-salesperson">@(house.AssignedSalesperson)</div>
+                                <div class="house-list-status">@(house.Status)</div>
+                                <div class="house-list-details">
+                                    <form asp-controller="Manager" asp-action="HouseDetails" method="get" id="get-house-details-@(house.Id)" class="action-icon-form">
+                                        <input type="hidden" value="@(house.Id)" name="houseID" />
+                                        <button title="Details">
+                                            <i class="fas fa-list-ul"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>

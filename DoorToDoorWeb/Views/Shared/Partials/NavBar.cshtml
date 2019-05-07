@@ -1,0 +1,178 @@
+﻿@using DoorToDoorLibrary.Logic
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json;
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    RoleManager rm = JsonConvert.DeserializeObject<RoleManager>(HttpContextAccessor.HttpContext.Session.GetString("RoleManager"));
+
+    string userController = null;
+
+    if (rm.IsAdministrator)
+    {
+        userController = "Administrator";
+    }
+    else if (rm.IsManager)
+    {
+        userController = "Manager";
+    }
+    else if (rm.IsSalesperson)
+    {
+        userController = "Salesperson";
+    }
+
+    @*<nav class="navbar navbar-light navbar-expand-lg" style="background-color:lightgrey;">
+                <div class="container-fluid">
+                    <ul class="nav navbar">
+                        <li class="navbar-header">
+                            <div class="navbar-brand">Door-to-Door Sales Tracker</div>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        @if (rm.User != null)
+                        {
+                            <li>
+                                <span class="glyphicon glyphicon-user" id="currentusernav"></span>
+                                <div>Welcome @(rm.User.FirstName) @(rm.User.LastName)</div>
+                            </li>
+                        }
+                        @if (rm.IsUnknown)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Home" asp-action="Login"><i class="fas fa-sign-in-alt"></i> Login</a>
+                            </li>
+                        }
+                        @if (!rm.IsUnknown)
+                        {
+                            <li class="nav-item" id="logoutnav">
+                                <a class="nav-link" asp-controller="Home" asp-action="Logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </nav>
+
+            <nav class="navbar-primary">
+                <a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
+                <ul class="navbar-primary-menu">
+                    @if ((rm.User != null) && !rm.User.UpdatePassword)
+                    {
+                        @if (!rm.IsUnknown)
+                        {
+                            <li class="nav-item active">
+                                <a class="nav-link" asp-controller="@userController" asp-action="Home"><i class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
+                            </li>
+                        }
+                        @if (rm.IsManager)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Manager" asp-action="Salespeople"><i class="fas fa-users"></i> My Salespeople</a>
+                            </li>
+                        }
+                        @if (rm.IsManager || rm.IsSalesperson)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="@userController" asp-action="Houses"><i class="fas fa-list-ul"></i> My Houses</a>
+                            </li>
+                        }
+                        @if (rm.IsManager)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Manager" asp-action="Products"><i class="fas fa-box-open"></i> My Products</a>
+                            </li>
+                        }
+                        @if (rm.IsSalesperson)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Salesperson" asp-action="Transactions"><i class="fas fa-box-open"></i> My Transactions</a>
+                            </li>
+                        }
+                        @if (rm.IsManager)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Manager" asp-action="Reports"><i class="fas fa-clipboard-list"></i> Reports</a>
+                            </li>
+                        }
+                    }
+                </ul>
+            </nav>
+        }*@
+
+    <nav class="navbar navbar-inverse navbar-global navbar-fixed-top" id="navbartop">
+        <div class="container-fluid">
+            <div class="navbar-header">
+
+               Door-to-Door Sales Tracker
+            </div>
+            <div id="navbar" class="navbar-expand-lg">
+                <ul class="nav navbar-nav navbar-right">
+                    @if (rm.User != null)
+                    {
+                    <li>
+                        <span class="glyphicon glyphicon-user" id="currentusernav"></span>
+                        <a class="nav-link" asp-controller="Home" asp-action="Profile"><i class="fas fa-user-edit"></i> Welcome @(rm.User.FirstName) @(rm.User.LastName)</a>
+                    </li>
+                    }
+                    <li>
+                        <a class="nav-link" asp-controller="Home" asp-action="About"><i class="fas fa-book"></i> About</a>
+                    </li>
+                    @if (rm.IsUnknown)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Login"><i class="fas fa-sign-in-alt"></i> Login</a>
+                        </li>
+                    }
+                    @if (!rm.IsUnknown)
+                    {
+                        <li class="nav-item" id="logoutnav">
+                            <a class="nav-link" asp-controller="Home" asp-action="Logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <nav class="navbar-primary">
+        <ul class="navbar-primary-menu nav">
+            @if ((rm.User != null) && !rm.User.UpdatePassword)
+            {
+                @if (!rm.IsUnknown)
+                {
+                    <li class="nav-item active">
+                        <a class="nav-link" asp-controller="@userController" asp-action="Home"><i class="fas fa-home"></i> Home <span class="sr-only">(current)</span></a>
+                    </li>
+                }
+                @if (rm.IsManager)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Manager" asp-action="Salespeople"><i class="fas fa-users"></i> My Salespeople</a>
+                    </li>
+                }
+                @if (rm.IsManager || rm.IsSalesperson)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="@userController" asp-action="Houses"><i class="fas fa-list-ul"></i> My Houses</a>
+                    </li>
+                }
+                @if (rm.IsManager)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Manager" asp-action="Products"><i class="fas fa-box-open"></i> My Products</a>
+                    </li>
+                }
+                @if (rm.IsSalesperson)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Salesperson" asp-action="Transactions"><i class="fas fa-box-open"></i> My Transactions</a>
+                    </li>
+                }
+                @if (rm.IsManager)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Manager" asp-action="Reports"><i class="fas fa-clipboard-list"></i> Reports</a>
+                    </li>
+                }
+            }
+        </ul>
+    </nav>
+
+    }
